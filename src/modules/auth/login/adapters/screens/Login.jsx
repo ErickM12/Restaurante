@@ -2,21 +2,36 @@ import React, { useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { Input, Button, Icon, Image } from "@rneui/base";
 import Logo from "../../../../../../assets/img/logo.png";
-import {isEmpty} from 'lodash';
+import { isEmpty } from "lodash";
+import Loading from "../../../../../kernel/components/Loading";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(true);
-  const [showErrorMessage,setShowErrorMessage] = useState('');
-  const login = () =>{
+  const [showErrorMessage, setShowErrorMessage] = useState("");
+  const [loading, setLoading] = useState(false);
+  const auth = getAuth();
+  const login = () => {
     if (!isEmpty(email) && !isEmpty(password)) {
-      //proceso login
-      console.log('Listo para iniciar sesión');
-      setShowErrorMessage('');
-    }else{
-      setShowErrorMessage('Campos obligatorios');
+      setShowErrorMessage("");
+      console.log("por entrar", email, password);
+      signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          // Signed in
+          const user = userCredential.user;
+          console.log("usuario", user);
+          // ...
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          console.log("error", errorCode, errorMessage);
+        });
+    } else {
+      setShowErrorMessage("Campos obligatorios");
     }
-  }
+  };
 
   return (
     <View style={styles.container}>
@@ -29,11 +44,7 @@ export default function Login() {
         containerStyle={styles.input}
         keyboardType="email-address"
         rightIcon={
-            <Icon 
-            type="material-community" 
-            name="email" 
-            color="#ef524a" 
-            />
+          <Icon type="material-community" name="email" color="#ef524a" />
         }
         errorMessage={showErrorMessage}
       />
@@ -54,12 +65,13 @@ export default function Login() {
         }
         errorMessage={showErrorMessage}
       />
-      <Button 
+      <Button
         title="Iniciar sesión"
         onPress={login}
         containerStyle={styles.btnContainer}
         buttonStyle={styles.btnStyle}
       />
+      <Loading isShow={loading} title="Iniciando sesión" />
     </View>
   );
 }
@@ -86,9 +98,9 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   btnContainer: {
-    width: '80%',
+    width: "80%",
   },
   btnStyle: {
-    backgroundColor: '#ef524a'
-  }
+    backgroundColor: "#ef524a",
+  },
 });

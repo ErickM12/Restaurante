@@ -5,29 +5,26 @@ import Logo from "../../../../../../assets/img/logo.png";
 import { isEmpty } from "lodash";
 import Loading from "../../../../../kernel/components/Loading";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-export default function Login() {
+export default function Login(props) {
+  const { navigation } = props;
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(true);
   const [showErrorMessage, setShowErrorMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const auth = getAuth();
-  const login = () => {
+  const login = async () => {
     if (!isEmpty(email) && !isEmpty(password)) {
       setShowErrorMessage("");
-      console.log("por entrar", email, password);
-      signInWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-          // Signed in
-          const user = userCredential.user;
-          console.log("usuario", user);
-          // ...
-        })
-        .catch((error) => {
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          console.log("error", errorCode, errorMessage);
-        });
+      setLoading(true);
+      try {
+        const user = await signInWithEmailAndPassword(auth, email, password)
+        navigation.navigate('UserLogged');
+      } catch (error) {
+        setShowErrorMessage('Usuario o contraseña incorrecta')
+      } finally {
+        setLoading(false);
+      }
     } else {
       setShowErrorMessage("Campos obligatorios");
     }

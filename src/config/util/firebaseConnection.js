@@ -1,18 +1,24 @@
 import { initializeApp, getApp } from "firebase/app";
-import { initializeAuth, getAuth, getReactNativePersistence } from 'firebase/auth';
-import ReactNativeAsyncStorage from '@react-native-async-storage/async-storage';
+import {
+  initializeAuth,
+  getAuth,
+  getReactNativePersistence,
+} from "firebase/auth";
+import ReactNativeAsyncStorage from "@react-native-async-storage/async-storage";
+import { getFirestore } from "firebase/firestore";
+
 const firebaseConfig = {
   apiKey: "AIzaSyC7Ee4KPxi99Vjyt5-K_MxupJhScf4nMfc",
   authDomain: "restauranteb-40cb1.firebaseapp.com",
   projectId: "restauranteb-40cb1",
   storageBucket: "restauranteb-40cb1.appspot.com",
   messagingSenderId: "446154473336",
-  appId: "1:446154473336:web:14bbab41c9276b2ba5928d"
+  appId: "1:446154473336:web:14bbab41c9276b2ba5928d",
 };
 
 const app = initializeApp(firebaseConfig);
 const auth = initializeAuth(app, {
-  persistence: getReactNativePersistence(ReactNativeAsyncStorage)
+  persistence: getReactNativePersistence(ReactNativeAsyncStorage),
 });
-
-export  {app, auth};
+const db = getFirestore(app);
+export { app, auth, db };

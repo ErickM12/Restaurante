@@ -5,6 +5,7 @@ import LoginStack from "../stack/LoginStack";
 import FavoritesStack from "../stack/FavoritesStack";
 import RestaurantsStack from "../stack/RestaurantsStack";
 import { Icon } from "@rneui/base";
+import AsesoriaStack from "../stack/AsesoriaStack";
 const Tab = createBottomTabNavigator();
 export default function Navigation() {
   return (
@@ -37,6 +38,11 @@ export default function Navigation() {
           component={LoginStack}
           options={{ title: "Cuenta" }}
         />
+        <Tab.Screen
+          name="AsesoriaStack"
+          component={AsesoriaStack}
+          options={{ title: "Asesoria" }}
+        />
       </Tab.Navigator>
     </NavigationContainer>
   );
@@ -54,6 +60,9 @@ const getIconName = (routeName, focused) => {
       break;
     case "LoginStack":
       iconName = focused ? "account" : "account-outline";
+      break;
+    case "AsesoriaStack":
+      iconName = focused ? "pen" : "pencil-outline";
       break;
   }
   return { iconName, iconType };

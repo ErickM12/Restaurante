@@ -4,7 +4,8 @@ import FlatListRestaurant from "./components/FlatListRestaurant";
 import { getDocs, collection } from "firebase/firestore";
 import { db } from "../../../../config/util/firebaseConnection";
 import Loading from '../../../../kernel/components/Loading'
-export default function Restaurants() {
+export default function Restaurants(props) {
+  const {navigation} = props;
   const [restaurants, setRestaurants] = useState(null);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
@@ -20,6 +21,8 @@ export default function Restaurants() {
             description: doc.data()["description"],
             rating: doc.data()["rating"],
             image: doc.data()["image"],
+            latitude: doc.data()["latitude"],
+            longitude: doc.data()["longitude"],
           });
           setRestaurants(arrayRestaurants);
         });
@@ -40,6 +43,7 @@ export default function Restaurants() {
             title={item.title}
             description={item.description}
             rating={item.rating}
+            action={() => navigation.navigate("RestaurantDetail", item)}
           />
         )}
         keyExtractor={(item) => item.uid.toString()}

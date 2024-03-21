@@ -1,26 +1,30 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import React from "react";
 import { AirbnbRating, Image } from "@rneui/base";
 
 export default function FlatListRestaurant(props) {
-  const { image, title, description, rating } = props;
+  const { image, title, description, rating, action } = props;
   return (
-    <View style={styles.listRestaurant}>
-      <Image source={{ uri: `${image}` }} style={styles.image} />
-      <View style={styles.containerText}>
-        <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-          <Text style={styles.title}>{title}</Text>
-          <AirbnbRating
-            count={5}
-            isDisabled={true}
-            defaultRating={rating}
-            size={12}
-            showRating={false}
-          />
+    <TouchableOpacity onPress={action}>
+      <View style={styles.listRestaurant}>
+        <Image source={{ uri: `${image}` }} style={styles.image} />
+        <View style={styles.containerText}>
+          <View
+            style={{ flexDirection: "row", justifyContent: "space-between" }}
+          >
+            <Text style={styles.title}>{title}</Text>
+            <AirbnbRating
+              count={5}
+              isDisabled={true}
+              defaultRating={rating}
+              size={12}
+              showRating={false}
+            />
+          </View>
+          <Text style={styles.description}>{description}</Text>
         </View>
-        <Text style={styles.description}>{description}</Text>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 }
 
@@ -36,7 +40,7 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     // Android shadow property
     elevation: 3,
-    padding: 8
+    padding: 8,
   },
   image: {
     width: 124,

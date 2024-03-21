@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "restaurante",
-    "slug": "restaurante",
+    "name": "RestauranteB",
+    "slug": "RestauranteB",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -11,14 +11,17 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
       "infoPlist": {
         "NSCameraUsageDescription": "Se necesita acceso a la cámara para tomar fotos",
-        "NSPhotoLibraryUsageDescription": "Se necesita acceso a la biblioteca de fotos para seleccionar una imagen de perfil"
+        "NSPhotoLibraryUsageDescription": "Allow $(PRODUCT_NAME) to access your photos.",
+        "NSPhotoLibraryAddUsageDescription": "Allow $(PRODUCT_NAME) to save photos."
+      },
+      "bundleIdentifier": "com.erickmm.RestauranteB",
+      "config": {
+        "googleMapsApiKey": "AIzaSyB02-SXe9TScg_SKdvvI7AmaOBvDO-Mt8o"
       }
     },
     "android": {
@@ -29,8 +32,17 @@
       "permissions": [
         "CAMERA",
         "READ_EXTERNAL_STORAGE",
-        "WRITE_EXTERNAL_STORAGE"
-      ]
+        "WRITE_EXTERNAL_STORAGE",
+        "android.permission.READ_EXTERNAL_STORAGE",
+        "android.permission.WRITE_EXTERNAL_STORAGE",
+        "android.permission.ACCESS_MEDIA_LOCATION"
+      ],
+      "package": "com.erickmm.RestauranteB",
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyAACsZGOXr2uWhOmfqolRpSbFNQLYKdoFs"
+        }
+      }
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -44,6 +56,17 @@
           "isAccessMediaLocationEnabled": true
         }
       ]
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "e42b6e8a-ba44-4a9c-a05e-46537fbbeb11"
+      }
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/e42b6e8a-ba44-4a9c-a05e-46537fbbeb11"
+    }
   }
 }
